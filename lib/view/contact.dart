@@ -21,6 +21,10 @@ class _ContactState extends State<Contact> {
     super.initState();
   }
 
+  void deleteContact(id) async {
+    await cc.deleteContact(id);
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -58,8 +62,14 @@ class _ContactState extends State<Contact> {
                           title: Text(data[index]['name']),
                           subtitle: Text(data[index]['phone']),
                           trailing: IconButton(
-                              onPressed: (() {}),
-                              icon: const Icon(Icons.delete)),
+                            onPressed: (() {
+                              deleteContact(data[index].id);
+                              setState(() {
+                                data.removeAt(index);
+                              });
+                            }),
+                            icon: const Icon(Icons.delete),
+                          ),
                         ),
                       ),
                     );

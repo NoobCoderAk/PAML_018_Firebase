@@ -33,4 +33,9 @@ class ContactController {
     streamController.add(contact.docs);
     return contact.docs;
   }
+
+  Future deleteContact(id) async {
+    final contact = await contactCollection.doc(id).delete();
+    return contact;
+  }
 }
