@@ -1,5 +1,7 @@
 import 'dart:convert';
 
+import 'package:firebase_auth/firebase_auth.dart';
+
 // ignore_for_file: public_member_api_docs, sort_constructors_first
 class UserModel {
   String name;
@@ -32,4 +34,6 @@ class UserModel {
 
   factory UserModel.fromJson(String source) =>
       UserModel.fromMap(json.decode(source) as Map<String, dynamic>);
+
+  static UserModel? fromFirebaseUser(User user) {}
 }

@@ -52,34 +52,43 @@ class _UpdateContactState extends State<UpdateContact> {
           padding: const EdgeInsets.all(20),
           child: Form(
             key: formkey,
+            autovalidateMode: AutovalidateMode.onUserInteraction,
             child: Column(
               children: [
                 TextFormField(
                   initialValue: widget.name,
                   decoration: const InputDecoration(hintText: 'Name'),
                   onChanged: (value) {
-                    widget.name = value;
+                    setState(() {
+                      widget.name = value;
+                    });
                   },
                 ),
                 TextFormField(
                   initialValue: widget.phone,
                   decoration: const InputDecoration(hintText: 'Phone'),
                   onChanged: (value) {
-                    widget.phone = value;
+                    setState(() {
+                      widget.phone = value;
+                    });
                   },
                 ),
                 TextFormField(
                   initialValue: widget.email,
                   decoration: const InputDecoration(hintText: 'Email'),
                   onChanged: (value) {
-                    widget.email = value;
+                    setState(() {
+                      widget.email = value;
+                    });
                   },
                 ),
                 TextFormField(
                   initialValue: widget.address,
                   decoration: const InputDecoration(hintText: 'Address'),
                   onChanged: (value) {
-                    widget.address = value;
+                    setState(() {
+                      widget.address = value;
+                    });
                   },
                 ),
                 ElevatedButton(

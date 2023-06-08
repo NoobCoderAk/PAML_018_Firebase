@@ -1,4 +1,5 @@
 import 'package:app_contact/controller/contact_controller.dart';
+import 'package:app_contact/model/contact_model.dart';
 import 'package:app_contact/view/add_contact.dart';
 import 'package:app_contact/view/update_contact.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
@@ -22,6 +23,10 @@ class _ContactState extends State<Contact> {
 
   void deleteContact(id) async {
     await cc.deleteContact(id);
+  }
+
+  void updateContact(String docId, ContactModel contactModel) async {
+    await cc.updateContact(docId, contactModel);
   }
 
   @override
