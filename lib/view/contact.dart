@@ -72,8 +72,13 @@ class _ContactState extends State<Contact> {
                                       Navigator.push(
                                         context,
                                         MaterialPageRoute(
-                                          builder: ((context) =>
-                                              const UpdateContact()),
+                                          builder: ((context) => UpdateContact(
+                                                docId: data[index]['id'],
+                                                name: data[index]['name'],
+                                                phone: data[index]['phone'],
+                                                email: data[index]['email'],
+                                                address: data[index]['address'],
+                                              )),
                                         ),
                                       );
                                     }),
