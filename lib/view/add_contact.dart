@@ -2,8 +2,6 @@ import 'package:app_contact/controller/contact_controller.dart';
 import 'package:app_contact/model/contact_model.dart';
 import 'package:app_contact/view/contact.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/src/widgets/container.dart';
-import 'package:flutter/src/widgets/framework.dart';
 
 class AddContact extends StatefulWidget {
   const AddContact({super.key});

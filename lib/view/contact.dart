@@ -1,9 +1,8 @@
 import 'package:app_contact/controller/contact_controller.dart';
 import 'package:app_contact/view/add_contact.dart';
+import 'package:app_contact/view/update_contact.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/src/widgets/container.dart';
-import 'package:flutter/src/widgets/framework.dart';
 
 class Contact extends StatefulWidget {
   const Contact({super.key});
@@ -29,55 +28,78 @@ class _ContactState extends State<Contact> {
   Widget build(BuildContext context) {
     return Scaffold(
       body: SafeArea(
-        child: Column(
-          children: [
-            const Text(
-              'Contact List',
-              style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
-            ),
-            Expanded(
+        child: Padding(
+          padding: EdgeInsets.all(20),
+          child: Column(
+            children: [
+              const Text(
+                'Contact List',
+                style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+              ),
+              Expanded(
                 child: StreamBuilder<List<DocumentSnapshot>>(
-              stream: cc.stream,
-              builder: ((context, snapshot) {
-                if (!snapshot.hasData) {
-                  return const Center(child: CircularProgressIndicator());
-                }
-                final List<DocumentSnapshot> data = snapshot.data!;
-                return ListView.builder(
-                  itemCount: data.length,
-                  itemBuilder: (context, index) {
-                    return Padding(
-                      padding: const EdgeInsets.all(3),
-                      child: Card(
-                        elevation: 8,
-                        child: ListTile(
-                          leading: CircleAvatar(
-                            backgroundColor: Colors.blue,
-                            child: Text(
-                              data[index]['name'].substring(0, 1).toUpperCase(),
-                              style:
-                                  const TextStyle(fontWeight: FontWeight.bold),
+                  stream: cc.stream,
+                  builder: ((context, snapshot) {
+                    if (!snapshot.hasData) {
+                      return const Center(child: CircularProgressIndicator());
+                    }
+                    final List<DocumentSnapshot> data = snapshot.data!;
+                    return ListView.builder(
+                      itemCount: data.length,
+                      itemBuilder: (context, index) {
+                        return Padding(
+                          padding: const EdgeInsets.all(3),
+                          child: Card(
+                            elevation: 8,
+                            child: ListTile(
+                              leading: CircleAvatar(
+                                backgroundColor: Colors.blue,
+                                child: Text(
+                                  data[index]['name']
+                                      .substring(0, 1)
+                                      .toUpperCase(),
+                                  style: const TextStyle(
+                                      fontWeight: FontWeight.bold),
+                                ),
+                              ),
+                              title: Text(data[index]['name']),
+                              subtitle: Text(data[index]['phone']),
+                              trailing: Row(
+                                mainAxisSize: MainAxisSize.min,
+                                children: <Widget>[
+                                  IconButton(
+                                    onPressed: (() {
+                                      Navigator.push(
+                                        context,
+                                        MaterialPageRoute(
+                                          builder: ((context) =>
+                                              const UpdateContact()),
+                                        ),
+                                      );
+                                    }),
+                                    icon: const Icon(Icons.edit),
+                                  ),
+                                  IconButton(
+                                    onPressed: (() {
+                                      deleteContact(data[index].id);
+                                      setState(() {
+                                        data.removeAt(index);
+                                      });
+                                    }),
+                                    icon: const Icon(Icons.delete),
+                                  ),
+                                ],
+                              ),
                             ),
                           ),
-                          title: Text(data[index]['name']),
-                          subtitle: Text(data[index]['phone']),
-                          trailing: IconButton(
-                            onPressed: (() {
-                              deleteContact(data[index].id);
-                              setState(() {
-                                data.removeAt(index);
-                              });
-                            }),
-                            icon: const Icon(Icons.delete),
-                          ),
-                        ),
-                      ),
+                        );
+                      },
                     );
-                  },
-                );
-              }),
-            ))
-          ],
+                  }),
+                ),
+              )
+            ],
+          ),
         ),
       ),
       floatingActionButton: FloatingActionButton(
