@@ -1,25 +1,24 @@
+// ignore_for_file: avoid_print
+
 import 'package:app_contact/controller/auth_controller.dart';
 import 'package:app_contact/model/usermdl.dart';
 import 'package:app_contact/view/contact.dart';
-import 'package:app_contact/view/login.dart';
+import 'package:app_contact/view/register.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/src/widgets/container.dart';
-import 'package:flutter/src/widgets/framework.dart';
 
-class Register extends StatefulWidget {
-  const Register({Key? key}) : super(key: key);
+class Login extends StatefulWidget {
+  const Login({super.key});
 
   @override
-  State<Register> createState() => _RegisterState();
+  State<Login> createState() => _LoginState();
 }
 
-class _RegisterState extends State<Register> {
-  String? name;
-  String? email;
-  String? password;
-
+class _LoginState extends State<Login> {
   final form = GlobalKey<FormState>();
   final authCt = AuthController();
+
+  String? email;
+  String? password;
 
   @override
   Widget build(BuildContext context) {
@@ -32,48 +31,39 @@ class _RegisterState extends State<Register> {
             child: Column(
               children: [
                 const Text(
-                  'Register',
+                  'Login',
                   style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
                 ),
                 TextFormField(
-                  decoration: const InputDecoration(labelText: 'Name'),
+                  decoration: const InputDecoration(hintText: 'Email'),
                   onChanged: (value) {
-                    name = value;
+                    setState(() {
+                      email = value;
+                    });
                   },
                 ),
                 TextFormField(
-                  decoration: const InputDecoration(labelText: 'Email'),
-                  onChanged: (value) {
-                    email = value;
-                  },
-                ),
-                TextFormField(
-                  decoration: const InputDecoration(labelText: 'Password'),
+                  decoration: const InputDecoration(hintText: 'Password'),
                   onChanged: (value) {
                     password = value;
                   },
-                ),
-                const SizedBox(
-                  height: 20,
                 ),
                 ElevatedButton(
                   onPressed: () async {
                     if (form.currentState!.validate()) {
                       UserModel? registeredUser =
-                          await authCt.registerWithEmailAndPassword(
+                          await authCt.signInWithEmailAndPassword(
                         email!,
                         password!,
-                        name!,
                       );
                       if (registeredUser != null) {
-                        // Registration successful
                         showDialog(
                           context: context,
                           builder: (BuildContext context) {
                             return AlertDialog(
-                              title: const Text('Registration Successful'),
+                              title: const Text('Login Successful'),
                               content: const Text(
-                                  'You have been successfully registered.'),
+                                  'You have been successfully Login'),
                               actions: <Widget>[
                                 TextButton(
                                   onPressed: () {
@@ -81,29 +71,9 @@ class _RegisterState extends State<Register> {
                                     Navigator.push(
                                       context,
                                       MaterialPageRoute(
-                                        builder: ((context) => const Login()),
+                                        builder: ((context) => const Contact()),
                                       ),
                                     );
-                                  },
-                                  child: const Text('OK'),
-                                ),
-                              ],
-                            );
-                          },
-                        );
-                      } else {
-                        // Registration failed
-                        showDialog(
-                          context: context,
-                          builder: (BuildContext context) {
-                            return AlertDialog(
-                              title: const Text('Registration Failed'),
-                              content: const Text(
-                                  'An error occurred during registration.'),
-                              actions: <Widget>[
-                                TextButton(
-                                  onPressed: () {
-                                    Navigator.pop(context);
                                   },
                                   child: const Text('OK'),
                                 ),
@@ -114,7 +84,18 @@ class _RegisterState extends State<Register> {
                       }
                     }
                   },
-                  child: const Text('Register'),
+                  child: const Text('Login'),
+                ),
+                TextButton(
+                  onPressed: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: ((context) => const Register()),
+                      ),
+                    );
+                  },
+                  child: Text('register akun'),
                 )
               ],
             ),

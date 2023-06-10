@@ -26,6 +26,7 @@ class AuthController {
           uId: user.uid,
           email: user.email ?? '',
           name: snapshot['name'] ?? '',
+          password: '',
         );
 
         return currentUser;
@@ -44,8 +45,12 @@ class AuthController {
       final User? user = userCredential.user;
 
       if (user != null) {
-        final UserModel newUser =
-            UserModel(uId: user.uid, email: user.email ?? '', name: name);
+        final UserModel newUser = UserModel(
+          uId: user.uid,
+          email: user.email ?? '',
+          name: name,
+          password: password,
+        );
 
         await usersCollection.doc(newUser.uId).set(newUser.toMap());
 
@@ -64,5 +69,9 @@ class AuthController {
       return UserModel.fromFirebaseUser(user);
     }
     return null;
+  }
+
+  Future<void> signOut() async {
+    await auth.signOut();
   }
 }

@@ -7,11 +7,13 @@ class UserModel {
   String name;
   String email;
   String uId;
+  String password;
 
   UserModel({
     required this.name,
     required this.email,
     required this.uId,
+    required this.password,
   });
 
   Map<String, dynamic> toMap() {
@@ -19,6 +21,7 @@ class UserModel {
       'name': name,
       'email': email,
       'uId': uId,
+      'password': password,
     };
   }
 
@@ -27,6 +30,7 @@ class UserModel {
       name: map['name'] as String,
       email: map['email'] as String,
       uId: map['uId'] as String,
+      password: map['password'] as String,
     );
   }
 
@@ -41,27 +45,36 @@ class UserModel {
     String? name,
     String? email,
     String? uId,
+    String? password,
   }) {
     return UserModel(
       name: name ?? this.name,
-      email: email ?? this.name,
+      email: email ?? this.email,
       uId: uId ?? this.uId,
+      password: password ?? this.password,
     );
   }
 
   @override
-  String toString() => 'UserModel(name:$name, email:$email, uId: $uId)';
+  String toString() {
+    return 'UserModel(name: $name, email: $email, uId: $uId, password: $password)';
+  }
 
   @override
-  bool operator ==(Object other) {
+  bool operator ==(covariant UserModel other) {
     if (identical(this, other)) return true;
 
-    return other is UserModel &&
-        other.name == name &&
+    return other.name == name &&
         other.email == email &&
-        other.uId == uId;
+        other.uId == uId &&
+        other.password == password;
   }
 
   @override
   int get hasCode => name.hashCode ^ email.hashCode ^ uId.hashCode;
+
+  @override
+  int get hashCode {
+    return name.hashCode ^ email.hashCode ^ uId.hashCode ^ password.hashCode;
+  }
 }

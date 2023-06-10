@@ -1,5 +1,6 @@
-import 'package:app_contact/view/add_contact.dart';
 import 'package:app_contact/view/contact.dart';
+import 'package:app_contact/view/login.dart';
+import 'package:app_contact/view/register.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 
@@ -30,7 +31,7 @@ class MyApp extends StatelessWidget {
         // is not restarted.
         primarySwatch: Colors.blue,
       ),
-      home: const Contact(),
+      home: const Login(),
       debugShowCheckedModeBanner: false,
     );
   }
