@@ -36,4 +36,32 @@ class UserModel {
       UserModel.fromMap(json.decode(source) as Map<String, dynamic>);
 
   static UserModel? fromFirebaseUser(User user) {}
+
+  UserModel copyWith({
+    String? name,
+    String? email,
+    String? uId,
+  }) {
+    return UserModel(
+      name: name ?? this.name,
+      email: email ?? this.name,
+      uId: uId ?? this.uId,
+    );
+  }
+
+  @override
+  String toString() => 'UserModel(name:$name, email:$email, uId: $uId)';
+
+  @override
+  bool operator ==(Object other) {
+    if (identical(this, other)) return true;
+
+    return other is UserModel &&
+        other.name == name &&
+        other.email == email &&
+        other.uId == uId;
+  }
+
+  @override
+  int get hasCode => name.hashCode ^ email.hashCode ^ uId.hashCode;
 }
